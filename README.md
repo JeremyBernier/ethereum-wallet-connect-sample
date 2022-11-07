@@ -1,6 +1,18 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a sample web application that allows the user to connect their ethereum wallet via Metamask, display their eth balance, and send ether to another user.
 
-## Getting Started
+![Picture](./demo-pic.png)
+
+### Libraries used:
+
+- ethers.js
+- Next.js
+- React.js
+- Recoil
+- TailwindCSS
+
+Created by [Jeremy Bernier](https://github.com/JeremyBernier)
+
+## Instructions
 
 First, run the development server:
 
