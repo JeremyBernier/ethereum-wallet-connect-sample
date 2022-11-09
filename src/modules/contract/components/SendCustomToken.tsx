@@ -18,8 +18,8 @@ const SendCustomToken = ({ tokenSymbol, tokenName }) => {
   };
 
   return (
-    <div className="bg-gray-800 px-6 pb-6 pt-4 rounded space-y-3">
-      <h3 className="text-xl font-bold">{`Send ${tokenName}`}</h3>
+    <div className="bg-gray-800 pb-4 pt-4 rounded space-y-3">
+      <h3 className="font-bold">{`Send ${tokenName} (${tokenSymbol})`}</h3>
       {/* {success && <span className="text-green-500">Successfully sent!</span>} */}
       {!error && transaction && (
         <span className="text-green-500">

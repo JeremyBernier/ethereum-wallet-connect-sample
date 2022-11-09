@@ -1,6 +1,8 @@
-This is a sample web application that allows the user to connect their ethereum wallet via Metamask, display their eth balance, and send ether to another user.
+This is a sample web application that allows the user to connect their ethereum wallet via Metamask, and send eth and/or a custom token to another user.
 
 ![Picture](./demo-pic.png)
+
+This is just a demo and not meant for production use.
 
 ### Libraries used:
 
