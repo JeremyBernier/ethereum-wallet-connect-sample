@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Link from "next/link";
-import Dashboard from "src/modules/ethereum/components/Dashboard";
-import WalletConnect from "src/modules/ethereum/components/WalletConnect";
-import useWalletConnected from "src/modules/ethereum/hooks/useWalletConnected";
+import Dashboard from "src/modules/wallet/components/Dashboard";
+import WalletConnect from "src/modules/wallet/components/WalletConnect";
+import useWalletConnected from "src/modules/wallet/hooks/useWalletConnected";
 
 export default function Home() {
   const walletConnected = useWalletConnected();

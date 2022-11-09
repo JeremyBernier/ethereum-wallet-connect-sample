@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
-import WalletMemoryStore from "../state/memoryStore";
-import { transferTokens } from "../lib/contract";
-import walletStateAtom from "../state/wallet.atom";
-import contractStateAtom from "../state/contract.atom";
+import WalletMemoryStore from "src/modules/wallet/state/memoryStore";
+import walletStateAtom from "src/modules/wallet/state/wallet.atom";
 import useSendTokens from "../hooks/useSendTokens";
 
 const SendCustomToken = ({ tokenSymbol, tokenName }) => {
@@ -12,46 +10,12 @@ const SendCustomToken = ({ tokenSymbol, tokenName }) => {
   const [tokenAmount, setTokenAmount] = useState("");
   const [recipientAddress, setRecipientAddress] = useState("");
 
-  const [walletState, setWalletState] = useRecoilState(walletStateAtom);
-  const [contractState, setContractState] = useRecoilState(contractStateAtom);
-  const { userAddress } = walletState;
-
-  const { provider } = WalletMemoryStore;
-
   const { sendTokens, loading, error, transaction } = useSendTokens(contract);
 
   const onSubmit = async (event) => {
     event.preventDefault();
     await sendTokens(recipientAddress, tokenAmount);
-    // setLoading(true);
-    // setError(null);
-    // try {
-    //   const transaction = await transferTokens(
-    //     contract,
-    //     recipientAddress,
-    //     tokenAmount
-    //   );
-    //   console.log("transaction", transaction);
-
-    //   // update balance
-    //   const userBalance = await contract.balanceOf(userAddress);
-    //   setContractState((prevState) => ({ ...prevState, userBalance }));
-    // } catch (err) {
-    //   if (err?.code !== "ACTION_REJECTED") {
-    //     console.error(err);
-    //     setError(String(err));
-    //   }
-    // }
-    // setLoading(false);
   };
-
-  // useEffect(() => {
-  //   if (success) {
-  //     setTimeout(() => {
-  //       setSuccess(false);
-  //     }, 3000);
-  //   }
-  // }, [success]);
 
   return (
     <div className="bg-gray-800 px-6 pb-6 pt-4 rounded space-y-3">

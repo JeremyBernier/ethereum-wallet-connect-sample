@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import walletAtom from "../state/wallet.atom";
+import walletAtom from "../../wallet/state/wallet.atom";
 import contractAtom from "../state/contract.atom";
 
 const useUpdateBalance = (contract) => {

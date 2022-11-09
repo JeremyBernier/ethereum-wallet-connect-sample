@@ -30,7 +30,7 @@ const useSendTokens = (contract) => {
         // was mined, so we throw this generic one.
         setError("Transaction failed");
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err?.code !== "ACTION_REJECTED") {
         console.error(err);
         setError(String(err));

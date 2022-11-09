@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { useRecoilState } from "recoil";
-import WalletMemoryStore from "../state/memoryStore";
-import walletStateAtom from "../state/wallet.atom";
+import WalletMemoryStore from "src/modules/wallet/state/memoryStore";
+import walletStateAtom from "src/modules/wallet/state/wallet.atom";
 import contractStateAtom from "../state/contract.atom";
 import SendCustomToken from "./SendCustomToken";
 
