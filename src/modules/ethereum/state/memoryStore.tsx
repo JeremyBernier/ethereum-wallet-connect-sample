@@ -5,9 +5,11 @@
 
 interface WalletMemoryInterface {
   provider?: any;
+  contract?: any;
 }
 
 const WalletMemoryStore: WalletMemoryInterface = {
   provider: undefined,
+  contract: undefined,
 };
 export default WalletMemoryStore;

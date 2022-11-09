@@ -10,11 +10,11 @@ export async function initializeEthers() {
     throw new Error("Could not find Metamask or other crypto wallet");
   }
 
-  if (window.ethereum.networkVersion !== NETWORK_ID) {
-    throw new Error(
-      `Please connect your wallet to the ${NETWORK_NAME} network`
-    );
-  }
+  // if (window.ethereum.networkVersion !== NETWORK_ID) {
+  //   throw new Error(
+  //     `Please connect your wallet to the ${NETWORK_NAME} network`
+  //   );
+  // }
 
   // A Web3Provider wraps a standard Web3 provider, which is
   // what MetaMask injects as window.ethereum into each page
@@ -30,7 +30,8 @@ export async function getUserInformation(provider) {
   const signer = provider.getSigner();
 
   const userAddress = await signer.getAddress();
-  const ensName = await provider.lookupAddress(userAddress);
+  const ensName = undefined;
+  // const ensName = await provider.lookupAddress(userAddress);
 
   return [userAddress, ensName];
 }

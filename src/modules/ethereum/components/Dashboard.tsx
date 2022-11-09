@@ -7,6 +7,7 @@ import { getUserEthBalance } from "../lib";
 import walletStateAtom from "../state/atom";
 import SendEth from "./SendEth";
 import { getEtherscanLink } from "../utils";
+import CustomTokenView from "./CustomTokenView";
 
 const Dashboard = () => {
   const [walletState, setWalletState] = useRecoilState(walletStateAtom);
@@ -46,6 +47,7 @@ const Dashboard = () => {
         )}
       </div>
       <SendEth />
+      <CustomTokenView />
     </div>
   );
 };
