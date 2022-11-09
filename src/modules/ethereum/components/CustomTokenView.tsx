@@ -2,34 +2,34 @@ import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { useRecoilState } from "recoil";
 import WalletMemoryStore from "../state/memoryStore";
-import walletStateAtom from "../state/atom";
+import walletStateAtom from "../state/wallet.atom";
+import contractStateAtom from "../state/contract.atom";
 import SendCustomToken from "./SendCustomToken";
 
 const CustomTokenView = () => {
+  const { contract } = WalletMemoryStore;
   const [walletState] = useRecoilState(walletStateAtom);
   const { userAddress } = walletState;
-  const { contract } = WalletMemoryStore;
-
-  const [tokenName, setTokenName] = useState();
-  const [tokenSymbol, setTokenSymbol] = useState();
-  const [userBalance, setUserBalance] = useState();
-  const [totalSupply, setTotalSupply] = useState();
+  const [contractState, setContractState] = useRecoilState(contractStateAtom);
+  const { tokenName, tokenSymbol, tokenSupply, userBalance } = contractState;
 
   useEffect(() => {
     (async () => {
-      const [_tokenName, _tokenSymbol, _totalSupply, _userBalance] =
+      const [tokenName, tokenSymbol, tokenSupply, userBalance] =
         await Promise.all([
           contract.name(),
           contract.symbol(),
           contract.totalSupply(),
           contract.balanceOf(userAddress),
         ]);
-      setTokenName(_tokenName);
-      setTokenSymbol(_tokenSymbol);
-      setTotalSupply(_totalSupply);
-      setUserBalance(_userBalance);
+      setContractState((prevState) => ({
+        tokenName,
+        tokenSymbol,
+        tokenSupply,
+        userBalance,
+      }));
     })();
-  }, [contract, userAddress]);
+  }, [contract, userAddress, setContractState]);
 
   return (
     <article className="bg-gray-800 px-6 pb-6 pt-4 rounded space-y-3">
@@ -38,7 +38,7 @@ const CustomTokenView = () => {
       </h2>
       <div>
         Total Supply:{" "}
-        {totalSupply ? ethers.utils.formatUnits(totalSupply, 0) : 0}
+        {tokenSupply ? ethers.utils.formatUnits(tokenSupply, 0) : 0}
       </div>
       <div>
         User Balance:{" "}

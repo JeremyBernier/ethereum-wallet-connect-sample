@@ -1,62 +1,67 @@
-import { useState } from "react";
-import { ethers } from "ethers";
+import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import WalletMemoryStore from "../state/memoryStore";
+import { transferTokens } from "../lib/contract";
+import walletStateAtom from "../state/wallet.atom";
+import contractStateAtom from "../state/contract.atom";
+import useSendTokens from "../hooks/useSendTokens";
 
 const SendCustomToken = ({ tokenSymbol, tokenName }) => {
   const { contract } = WalletMemoryStore;
 
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
   const [tokenAmount, setTokenAmount] = useState("");
   const [recipientAddress, setRecipientAddress] = useState("");
 
+  const [walletState, setWalletState] = useRecoilState(walletStateAtom);
+  const [contractState, setContractState] = useRecoilState(contractStateAtom);
+  const { userAddress } = walletState;
+
   const { provider } = WalletMemoryStore;
+
+  const { sendTokens, loading, error, transaction } = useSendTokens(contract);
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    setLoading(true);
-    setError(null);
-    try {
-      console.log("transfer", recipientAddress, tokenAmount);
-      console.log("0", ethers.utils.parseUnits(String(tokenAmount), 0));
-      console.log("formatEther", ethers.utils.formatEther(String(tokenAmount)));
-      const transaction = await contract.transfer(
-        recipientAddress,
-        tokenAmount
-      );
-      console.log("transaction", transaction);
-      // await signer.sendTransaction({
-      //   to: recipientAddress,
-      //   value: ethers.utils.parseEther(String(tokenAmount)),
-      // });
+    await sendTokens(recipientAddress, tokenAmount);
+    // setLoading(true);
+    // setError(null);
+    // try {
+    //   const transaction = await transferTokens(
+    //     contract,
+    //     recipientAddress,
+    //     tokenAmount
+    //   );
+    //   console.log("transaction", transaction);
 
-      // We use .wait() to wait for the transaction to be mined. This method
-      // returns the transaction's receipt.
-      const receipt = await transaction.wait();
-      console.log("receipt", receipt);
-
-      // The receipt, contains a status flag, which is 0 to indicate an error.
-      if (receipt.status === 0) {
-        // We can't know the exact error that made the transaction fail when it
-        // was mined, so we throw this generic one.
-        throw new Error("Transaction failed");
-      }
-
-      // If we got here, the transaction was successful, so you may want to
-      // update your state. Here, we update the user's balance.
-      console.log("successful");
-    } catch (err) {
-      if (err?.code !== "ACTION_REJECTED") {
-        console.error(err);
-        setError(String(err));
-      }
-    }
-    setLoading(false);
+    //   // update balance
+    //   const userBalance = await contract.balanceOf(userAddress);
+    //   setContractState((prevState) => ({ ...prevState, userBalance }));
+    // } catch (err) {
+    //   if (err?.code !== "ACTION_REJECTED") {
+    //     console.error(err);
+    //     setError(String(err));
+    //   }
+    // }
+    // setLoading(false);
   };
+
+  // useEffect(() => {
+  //   if (success) {
+  //     setTimeout(() => {
+  //       setSuccess(false);
+  //     }, 3000);
+  //   }
+  // }, [success]);
 
   return (
     <div className="bg-gray-800 px-6 pb-6 pt-4 rounded space-y-3">
       <h3 className="text-xl font-bold">{`Send ${tokenName}`}</h3>
+      {/* {success && <span className="text-green-500">Successfully sent!</span>} */}
+      {!error && transaction && (
+        <span className="text-green-500">
+          Successfully sent!: Transaction ID: {transaction}
+        </span>
+      )}
       {error && <div className="text-red-500">{error}</div>}
       <form className="space-y-3" onSubmit={onSubmit}>
         <div>

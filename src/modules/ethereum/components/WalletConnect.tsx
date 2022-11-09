@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { RecoilRoot, selector, useRecoilState, useRecoilValue } from "recoil";
 import { ethers } from "ethers";
-import walletStateAtom from "../state/atom";
+import walletStateAtom from "../state/wallet.atom";
 import { initializeEthers, getUserInformation } from "../lib";
 import { initializeContract } from "../lib/contract";
 import memoryWalletStore from "../state/memoryStore";

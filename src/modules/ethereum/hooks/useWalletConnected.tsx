@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import walletStateAtom from "../state/atom";
+import walletStateAtom from "../state/wallet.atom";
 
 // Returns true if user has connected wallet
 const useWalletConnected = () => {

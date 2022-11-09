@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 import Link from "next/link";
 import WalletMemoryStore from "../state/memoryStore";
 import { getUserEthBalance } from "../lib";
-import walletStateAtom from "../state/atom";
+import walletStateAtom from "../state/wallet.atom";
 import SendEth from "./SendEth";
 import { getEtherscanLink } from "../utils";
 import CustomTokenView from "./CustomTokenView";
