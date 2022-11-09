@@ -1,4 +1,4 @@
-This is a sample web application that allows the user to connect their ethereum wallet via Metamask, and send eth and/or a custom token to another user.
+This is a sample web application that allows the user to connect their ethereum wallet via Metamask, and send eth and/or a custom token to another user. Adapted from [https://github.com/NomicFoundation/hardhat-boilerplate](https://github.com/NomicFoundation/hardhat-boilerplate)
 
 ![Picture](./demo-pic.png)
 
@@ -16,7 +16,24 @@ Created by [Jeremy Bernier](https://github.com/JeremyBernier)
 
 ## Instructions
 
-First, run the development server:
+### Smart Contract
+
+In one terminal window run:
+
+```
+npx hardhat node
+```
+
+In another window run
+
+```
+cd contract
+npx hardhat run scripts/deploy.ts --network localhost
+npx hardhat --network localhost faucet <your_eth_address>
+```
+### Frontend
+
+Run the development server:
 
 ```bash
 npm run dev
