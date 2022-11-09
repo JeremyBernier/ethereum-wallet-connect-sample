@@ -1,40 +1,15 @@
-import { useState } from "react";
 import { RecoilRoot, selector, useRecoilState, useRecoilValue } from "recoil";
-import { ethers } from "ethers";
 import walletStateAtom from "../state/wallet.atom";
-import { initializeEthers, getUserInformation } from "../lib";
-import { initializeContract } from "../../contract/lib/contract";
-import memoryWalletStore from "../state/memoryStore";
 import { shortenedCryptoAddress } from "../utils";
+import useConnectWallet from "../hooks/useConnectWallet";
 
 const WalletConnect = () => {
   const [walletState, setWalletState] = useRecoilState(walletStateAtom);
-  const [error, setError] = useState();
-  const [loading, setLoading] = useState(false);
+  const { connectWallet, error, loading } = useConnectWallet();
 
   const onClickConnectWallet = async (event) => {
-    setLoading(true);
-    setError(undefined);
-    try {
-      const provider = await initializeEthers();
-      memoryWalletStore.provider = provider;
-      const [userAddress, ensName] = await getUserInformation(provider);
-
-      const contract = await initializeContract(provider);
-      memoryWalletStore.contract = contract;
-
-      setWalletState((walletState) => ({
-        ...walletState,
-        userAddress,
-        ensName,
-      }));
-    } catch (err) {
-      console.error(err);
-      setError(err.message);
-      return;
-    }
-    setLoading(false);
-    setError(undefined);
+    event.preventDefault();
+    connectWallet();
   };
 
   const userWalletName =
